@@ -1,0 +1,308 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0d0d0d;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+
+.grid-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 40px 40px;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    z-index: 1;
+}
+
+
+.selection-card {
+    background: rgba(20, 20, 20, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 40px 30px;
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    z-index: 2;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.card-title {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.card-subtitle {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 12px;
+    font-family: monospace;
+    margin-bottom: 25px;
+}
+
+
+.action-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.btn-seleksi {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-family: monospace;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-seleksi:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn-rules {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    width: 45px;
+    height: 45px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.btn-rules:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: rotate(15deg);
+}
+
+/* Bagian Credit Nama */
+.footer-credit {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 11px;
+    font-family: monospace;
+    letter-spacing: 0.5px;
+}
+
+/* Proteksi Font Khusus Nama Kamu */
+.footer-credit span {
+    color: rgba(255, 255, 255, 0.4);
+    font-family: sans-serif !important;
+    font-weight: bold;
+}
+
+/* SYSTEM POP-UP MODAL (Foto Kedua) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: rgba(25, 25, 25, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    width: 85%;
+    max-width: 340px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+}
+
+.modal-title {
+    color: #ffffff;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: monospace;
+    letter-spacing: 0.5px;
+}
+
+.rules-list {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    font-family: monospace;
+    line-height: 1.8;
+    padding-left: 5px;
+    list-style: none;
+}
+
+.rules-list li {
+    margin-bottom: 8px;
+}
+
+/* Tombol Salin di Dalam Modal */
+.btn-copy-form {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    font-family: monospace;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-copy-form:hover {
+    background: #ffffff;
+    color: #0d0d0d;
+    border-color: #ffffff;
+}
+
+.btn-copy-form i {
+    font-size: 15px;
+}
+
+/* POP-UP NOTIFIKASI SUKSES (TOAST) */
+.toast-container {
+    position: fixed;
+    bottom: -100px; /* Sembunyi di bawah layar awal */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 350px;
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 16px;
+    z-index: 999;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efek membal halus */
+    pointer-events: none;
+}
+
+/* Muncul melayang dari bawah */
+.toast-container.show {
+    bottom: 30px; 
+    pointer-events: auto;
+}
+
+.toast-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.toast-icon {
+    color: #22c55e; /* Warna hijau indikator sukses */
+    font-size: 20px;
+    margin-top: 2px;
+}
+
+.toast-text {
+    color: #ffffff;
+    text-align: left;
+}
+
+.toast-text strong {
+    display: block;
+    font-size: 13px;
+    font-family: 'Segoe UI', sans-serif;
+    margin-bottom: 3px;
+}
+
+.toast-text p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 11px;
+    font-family: monospace;
+    line-height: 1.4;
+}
+
+.btn-seleksi-utama {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-family: sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-seleksi-utama:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-star-rules {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-star-rules:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.action-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
