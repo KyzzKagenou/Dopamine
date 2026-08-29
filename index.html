@@ -228,12 +228,15 @@
         </div>
     </div>
 
-    <!-- KOTAK SARAN & PESAN (NETLIFY FORMS) -->
+    <!-- KOTAK SARAN & PESAN (NETLIFY FORMS DENGAN AJAX) -->
     <div style="max-width: 500px; margin: 40px auto; padding: 25px; border-radius: 16px; background: rgba(20, 20, 23, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
         <h3 style="margin-bottom: 8px; text-align: center; color: #fff; font-size: 18px;"><i class="ri-mail-send-line"></i> Kotak Saran & Pesan</h3>
         <p style="text-align: center; color: rgba(255,255,255,0.5); font-size: 12.5px; margin-bottom: 20px;">Punya kritik, saran, atau pesan buat Dopamine? Kirim di sini ya!</p>
         
-       <form name="kotak-saran" method="POST" netlify action="/" style="display: flex; flex-direction: column; gap: 15px;">
+        <form name="kotak-saran" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleSubmit(event)" style="display: flex; flex-direction: column; gap: 15px;">
+            <input type="hidden" name="form-name" value="kotak-saran" />
+            <p style="display: none;"><label>Don’t fill this out: <input name="bot-field" /></label></p>
+
             <div style="display: flex; flex-direction: column; text-align: left;">
                 <label style="font-size: 13.5px; font-weight: 500; margin-bottom: 6px; color: rgba(255,255,255,0.8);">Nama / Panggilan:</label>
                 <input type="text" name="nama" required placeholder="Tulis nama kamu..." style="padding: 11px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: #fff; font-size: 14px; outline: none;">
@@ -467,6 +470,24 @@
             grabCursor: true,
         });
 
+        // FUNGSI AJAX SUBMISSION NETLIFY FORMS
+        const handleSubmit = event => {
+            event.preventDefault();
+            const myForm = event.target;
+            const formData = new FormData(myForm);
+
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                alert("Terima kasih! Pesan kamu berhasil terkirim.");
+                myForm.reset();
+            })
+            .catch(error => alert("Gagal mengirim pesan: " + error));
+        };
+
         function openAdminModal(name, role, sub, img, igUrl, igSec, igAlt, ttUrl) {
             document.getElementById('modalAdminName').innerText = name;
             document.getElementById('modalAdminRole').innerText = role;
@@ -505,19 +526,19 @@
 
         // Fungsionalitas Navigasi antar Menu & Detail Info
         function showInfoDetail(number) {
-    document.getElementById('infoMainMenuView').style.display = 'none';
-    document.querySelectorAll('.info-detail-box').forEach(box => box.classList.remove('active'));
-    
-    const targetDetail = document.getElementById('infoDetail' + number);
-    const descEl = targetDetail.querySelector('.info-detail-desc');
-    
-    // Cek otomatis: jika isinya cuma tanda '#'
-    if (descEl.innerText.trim() === '#') {
-        descEl.innerHTML = '<span style="color: rgba(255, 255, 255, 0.4); font-style: italic; display: flex; align-items: center; gap: 6px;"><i class="ri-error-warning-line" style="font-size: 16px;"></i> Belum ada informasi tersedia.</span>';
-    }
-    
-    targetDetail.classList.add('active');
-}
+            document.getElementById('infoMainMenuView').style.display = 'none';
+            document.querySelectorAll('.info-detail-box').forEach(box => box.classList.remove('active'));
+            
+            const targetDetail = document.getElementById('infoDetail' + number);
+            const descEl = targetDetail.querySelector('.info-detail-desc');
+            
+            // Cek otomatis: jika isinya cuma tanda '#'
+            if (descEl.innerText.trim() === '#') {
+                descEl.innerHTML = '<span style="color: rgba(255, 255, 255, 0.4); font-style: italic; display: flex; align-items: center; gap: 6px;"><i class="ri-error-warning-line" style="font-size: 16px;"></i> Belum ada informasi tersedia.</span>';
+            }
+            
+            targetDetail.classList.add('active');
+        }
         
 
         function backToInfoMenu() {
