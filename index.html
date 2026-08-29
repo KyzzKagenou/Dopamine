@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dopamine</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Animasi Pop-up Membesar & Mulus */
+        #infoModal .modal-content {
+            transform: scale(0.85);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 360px;
+            width: 90%;
+            text-align: center;
+            background: #141417;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            padding: 25px 20px;
+        }
+
+        #infoModal.show .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Tombol Pilihan Info */
+        .info-btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .info-menu-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: left;
+        }
+
+        .info-menu-btn i {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.06);
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .info-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .info-menu-btn:hover i {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Area Teks Detail Info (Muncul dengan Animasi Fade & Slide) */
+        .info-detail-box {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            text-align: left;
+            margin-top: 10px;
+            padding: 10px 4px;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .info-detail-box.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .info-back-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 12px;
+            font-family: 'Segoe UI', sans-serif;
+            transition: color 0.2s;
+        }
+
+        .info-back-btn:hover {
+            color: #ffffff;
+        }
+
+        .info-detail-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .info-detail-desc {
+            font-size: 13.5px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero-container">
+        <img src="DPP.jpeg" alt="Dopamine Icon" class="profile-pic">
+        <div class="header-text">
+            <p class="subtitle">WELCOME TO OUR CC</p>
+            <h1 class="main-title">DOPAMINE</h1>
+        </div>
+
+        <div class="button-container">
+            <a href="#jelajahi-section" class="btn btn-primary" style="text-decoration: none;">
+                <i class="ri-compass-discover-line"></i> Jelajahi
+            </a>
+            <button class="btn btn-secondary">
+                <i class="ri-notification-3-line"></i> Info
+            </button>
+        </div>
+    </div>
+
+    <div id="jelajahi-section" class="member-container">
+        <h2 class="section-title">Jumlah Member Dopamine</h2>
+
+        <div class="stats-box" style="display: flex; justify-content: center; align-items: center;">
+            <span id="main-member-count" class="stats-value"
+                style="font-size: 48px; font-weight: bold; font-family: 'Segoe UI', sans-serif;">14</span>
+        </div>
+
+        <div class="member-actions">
+            <button id="openMemberBtn" class="btn-action shimmer-effect">
+                <i class="ri-user-line"></i> Daftar Member
+            </button>
+            <a href="join/index.html" class="btn-action"
+                style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                <i class="ri-external-link-line"></i> Join
+            </a>
+        </div>
+
+        <div class="admin-section">
+            <h2 class="admin-section-title">Admin of Dopamine</h2>
+
+            <div class="swiper admin-swiper">
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide admin-card"
+                        onclick="openAdminModal('Barzz444', 'Penasihat', 'Bartiji†', 'A1PP.jpeg', 'https://www.instagram.com/alxybar_30?igsh=MWxnbGFjMTFwNzFzdg==', '', '', 'https://www.tiktok.com/@alxybar_?_r=1&_t=ZS-96av9N01fhY')">
+                        <div class="admin-avatar-box">
+                            <img src="A1PP.jpeg" alt="Barzz444" class="admin-img-dummy">
+                        </div>
+                        <h3 class="card-admin-name">Barzz444</h3>
+                        <p class="card-admin-role">Penasihat</p>
+                        <p class="card-admin-sub">Bartiji†</p>
+                    </div>
+
+                    <div class="swiper-slide admin-card"
+                        onclick="openAdminModal('Kyzzlyy', 'Editor & Media', '—𝙆𝙮𝙯𝙚nn` 𝖋𝖙 𝙆𝙂𝙉', 'A2PP.jpeg', 'https://www.instagram.com/bill_fushiguro?igsh=M2w5M2tvenppNnB2', 'https://www.instagram.com/kyzennkagenou?igsh=Ym4yMWw3d2twanF4', 'https://www.instagram.com/bill_4everr?igsh=MWd5aGRvMWIzeGQ1cA==', 'https://www.tiktok.com/@kyzeennmc?_r=1&_t=ZS-96avgdtFSAU')">
+                        <div class="admin-avatar-box">
+                            <img src="A2PP.jpeg" alt="Kyzzlyy" class="admin-img-dummy">
+                        </div>
+                        <h3 class="card-admin-name">Kyzzlyy</h3>
+                        <p class="card-admin-role">Editor & Media</p>
+                        <p class="card-admin-sub">—𝙆𝙮𝙯𝙚nn` 𝖋𝖙 𝙆𝙂𝙉</p>
+                    </div>
+
+                    <div class="swiper-slide admin-card"
+                        onclick="openAdminModal('Magnum', 'Founder & Media', 'Vanfly', 'A3PP.jpeg', 'https://www.instagram.com/porterosta?igsh=MWVhN2ZtY2R5bjRvbA==', '', '', 'https://www.tiktok.com/@vanzstr_01?_r=1&_t=ZS-96avBocNj6u')">
+                        <div class="admin-avatar-box">
+                            <img src="A3PP.jpeg" alt="Magnum" class="admin-img-dummy">
+                        </div>
+                        <h3 class="card-admin-name">Magnum</h3>
+                        <p class="card-admin-role">Founder</p>
+                        <p class="card-admin-sub">Vanfly</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="sosmed-section">
+            <p class="sosmed-title">Media Sosial Resmi</p>
+            <div class="sosmed-icons-box">
+                <a href="https://whatsapp.com/channel/0029VbCjzKgFcowEoPXdfH15" target="_blank"
+                    class="sosmed-link floating-1" title="Saluran WhatsApp">
+                    <i class="ri-whatsapp-line"></i>
+                </a>
+                <a href="https://www.instagram.com/dop4m1n3oe?igsh=a2h5dW03M3o1NTJk" target="_blank"
+                    class="sosmed-link floating-2" title="Instagram">
+                    <i class="ri-instagram-line"></i>
+                </a>
+                <a href="https://www.tiktok.com/@opmine28?_r=1&_t=ZS-96ZYR6W51Xk" target="_blank"
+                    class="sosmed-link floating-3" title="TikTok">
+                    <i class="ri-tiktok-line"></i>
+                </a>
+                <a href="#" id="openDiscordBtn" class="sosmed-link floating-4" title="Discord (Coming Soon)">
+                    <i class="ri-discord-line"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- KOTAK SARAN & PESAN (NETLIFY FORMS) -->
+    <div style="max-width: 500px; margin: 40px auto; padding: 25px; border-radius: 16px; background: rgba(20, 20, 23, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <h3 style="margin-bottom: 8px; text-align: center; color: #fff; font-size: 18px;"><i class="ri-mail-send-line"></i> Kotak Saran & Pesan</h3>
+        <p style="text-align: center; color: rgba(255,255,255,0.5); font-size: 12.5px; margin-bottom: 20px;">Punya kritik, saran, atau pesan buat Dopamine? Kirim di sini ya!</p>
+        
+        <form name="kotak-saran" method="POST" netlify style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="display: flex; flex-direction: column; text-align: left;">
+                <label style="font-size: 13.5px; font-weight: 500; margin-bottom: 6px; color: rgba(255,255,255,0.8);">Nama / Panggilan:</label>
+                <input type="text" name="nama" required placeholder="Tulis nama kamu..." style="padding: 11px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: #fff; font-size: 14px; outline: none;">
+            </div>
+            
+            <div style="display: flex; flex-direction: column; text-align: left;">
+                <label style="font-size: 13.5px; font-weight: 500; margin-bottom: 6px; color: rgba(255,255,255,0.8);">Pesan / Saran:</label>
+                <textarea name="pesan" rows="4" required placeholder="Tulis pesan atau saran untuk web ini..." style="padding: 11px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: #fff; font-size: 14px; resize: vertical; outline: none;"></textarea>
+            </div>
+            
+            <button type="submit" style="padding: 12px; background: #2563eb; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 14.5px; transition: 0.2s; margin-top: 5px;">Kirim Pesan</button>
+        </form>
+    </div>
+
+    <div id="infoModal" class="modal-overlay">
+        <div class="modal-content">
+            
+            <div id="infoMainMenuView">
+                <h2 class="modal-title" style="font-size: 19px; margin-bottom: 5px;">Informasi Dopamine</h2>
+                <p style="color: rgba(255,255,255,0.5); font-size: 12.5px; margin-bottom: 15px;">Pilih kategori informasi di bawah ini:</p>
+                
+                <div class="info-btn-group">
+                    <button class="info-menu-btn" onclick="showInfoDetail(1)">
+                        <i class="ri-information-line"></i>
+                        <span>Informasi 1</span>
+                    </button>
+                    <button class="info-menu-btn" onclick="showInfoDetail(2)">
+                        <i class="ri-information-line"></i>
+                        <span>Informasi 2</span>
+                    </button>
+                    <button class="info-menu-btn" onclick="showInfoDetail(3)">
+                        <i class="ri-information-line"></i>
+                        <span>Informasi 3</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="infoDetail1" class="info-detail-box">
+                <button class="info-back-btn" onclick="backToInfoMenu()"><i class="ri-arrow-left-line"></i> Kembali</button>
+                <h3 class="info-detail-title">Informasi 1</h3>
+                <p class="info-detail-desc">
+                    Selalu Open Member, Gas Join!
+                </p>
+            </div>
+
+            <div id="infoDetail2" class="info-detail-box">
+                <button class="info-back-btn" onclick="backToInfoMenu()"><i class="ri-arrow-left-line"></i> Kembali</button>
+                <h3 class="info-detail-title">Informasi 2</h3>
+                <p class="info-detail-desc">
+                    krisis member rekk... T_T
+                </p>
+            </div>
+
+            <div id="infoDetail3" class="info-detail-box">
+                <button class="info-back-btn" onclick="backToInfoMenu()"><i class="ri-arrow-left-line"></i> Kembali</button>
+                <h3 class="info-detail-title">Informasi 3</h3>
+                <p class="info-detail-desc">
+                    #
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="adminModal" class="modal-overlay">
+        <div class="modal-content admin-modal-content">
+
+            <div class="modal-avatar-wrapper">
+                <img src="" id="modalAdminImg" alt="Admin Profile" class="modal-admin-round-pic">
+            </div>
+
+            <h2 id="modalAdminName" class="modal-title" style="margin-top: 10px; font-size: 22px;">Nama Admin</h2>
+            <p id="modalAdminRole"
+                style="color: rgba(255, 255, 255, 0.5); font-size: 13px; font-family: 'Segoe UI', sans-serif; margin-bottom: 4px;">
+                Role</p>
+            <p id="modalAdminSub"
+                style="color: rgba(255, 255, 255, 0.3); font-size: 11px; font-family: 'Segoe UI', sans-serif; margin-bottom: 25px;">
+                Subname</p>
+
+            <div class="linktree-container">
+                <a href="#" id="linktreeInstagram" target="_blank" class="linktree-btn l-ig">
+                    <i class="ri-instagram-line"></i> Instagram
+                </a>
+
+                <a href="#" id="linktreeInstagramSec" target="_blank" class="linktree-btn l-ig" style="display: none;">
+                    <i class="ri-instagram-line"></i> Akun Second
+                </a>
+                <a href="#" id="linktreeInstagramAlt" target="_blank" class="linktree-btn l-ig" style="display: none;">
+                    <i class="ri-instagram-line"></i> Akun Alt
+                </a>
+
+                <a href="#" id="linktreeTikTok" target="_blank" class="linktree-btn l-tt">
+                    <i class="ri-tiktok-line"></i> TikTok
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="memberListModal" class="modal-overlay">
+        <div class="modal-content list-modal-content">
+            <h2 class="modal-title" style="font-size: 20px; margin-bottom: 20px;">Daftar Member Dopamine</h2>
+
+            <div class="search-wrapper">
+                <input type="text" id="memberSearch" placeholder="Cari username ...">
+            </div>
+
+            <div class="member-scroll-box" id="memberListContainer">
+                <a href="https://www.tiktok.com/@kyzeennmc?_r=1&_t=ZS-96avgdtFSAU" target="_blank"
+                    class="member-card item-stagger" style="text-decoration: none;" data-status="on">
+                    <h3 class="member-name">—𝙆𝙮𝙯𝙚nn`𝖋𝖙 𝙆𝙂𝙉</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @KyzennKagenou</p>
+                </a>
+                <a href="#" target="_blank" class="member-card item-stagger" style="text-decoration: none;" data-status="rest">
+                    <h3 class="member-name">Akbar Tandjung</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @akbarrizky66</p>
+                </a>
+                <a href="https://www.tiktok.com/@vanzstr_01?_r=1&_t=ZS-96avBocNj6u" target="_blank"
+                    class="member-card item-stagger" style="text-decoration: none;" data-status="out">
+                    <h3 class="member-name">Magnum</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @vanzstr_01</p>
+                </a>
+                <a href="https://www.tiktok.com/@alxybar_?_r=1&_t=ZS-96av9N01fhY" target="_blank"
+                    class="member-card item-stagger" style="text-decoration: none;" data-status="out">
+                    <h3 class="member-name">Barz 444</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @alxybar_</p>
+                </a>
+                <a href="https://www.tiktok.com/@vo1zz4?_r=1&_t=ZS-96bBPiADTsK" target="_blank"
+                    class="member-card item-stagger" style="text-decoration: none;" data-status="out">
+                    <h3 class="member-name">Voizz</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @vo1zz_</p>
+                </a>
+                <a href="https://www.tiktok.com/@mad_18__?_r=1&_t=ZS-96b9wzaG63L" target="_blank"
+                    class="member-card item-stagger" style="text-decoration: none;" data-status="out">
+                    <h3 class="member-name">Mas mad</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @mad_18__</p>
+                </a>
+                <a href="https://www.tiktok.com/@ndreya14?_r=1&_t=ZS-96b9yPnqpIF" target="_blank"
+                    class="member-card item-stagger" style="text-decoration: none;" data-status="out">
+                    <h3 class="member-name">jennie lokal</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @ndreya14</p>
+                </a>
+                <a href="https://www.tiktok.com/@yourrkyaaa_?_r=1&_t=ZS-96bCrqtHYOK" target="_blank" class="member-card item-stagger" style="text-decoration: none;" data-status="out">
+                    <h3 class="member-name">winter aespa</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @yourrkyyaa</p>
+                </a>
+                <a href="https://www.tiktok.com/@depi22x?_r=1&_t=ZS-96bDb0UwtYj" target="_blank" class="member-card item-stagger" style="text-decoration: none;" data-status="out">
+                    <h3 class="member-name">iah h2h</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @seanctuary</p>
+                </a>
+                <a href="https://www.tiktok.com/@azzam1914.0?_r=1&_t=ZS-96b9zf6OG6K" target="_blank"
+                    class="member-card item-stagger" style="text-decoration: none;" data-status="out">
+                    <h3 class="member-name">Z4mmm</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @azzam1914.0</p>
+                </a>
+                <a href="https://www.tiktok.com/@16barllzyx?_r=1&_t=ZS-96b3a1usoL7" target="_blank"
+                    class="member-card item-stagger" style="text-decoration: none;" data-status="out">
+                    <h3 class="member-name">maulana</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @23uwikzfaboy</p>
+                </a>
+                <a href="https://www.tiktok.com/@el_plenger07?_r=1&_t=ZS-96bECiRklZV" target="_blank"
+                    class="member-card item-stagger" style="text-decoration: none;" data-status="on">
+                    <h3 class="member-name">thistidur</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @thisturu</p>
+                </a>
+                <a href="#" target="_blank"
+                    class="member-card item-stagger" style="text-decoration: none;" data-status="out">
+                    <h3 class="member-name">J for JONZZ</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @jonzz</p>
+                </a>
+                <a href="https://www.tiktok.com/@muhammad.ali.saif55?_r=1&_t=ZS-973mKkXykad" target="_blank"
+                    class="member-card item-stagger" style="text-decoration: none;" data-status="on">
+                    <h3 class="member-name">Shiro奇妙な</h3>
+                    <p class="member-username"><i class="ri-tiktok-fill"></i> @KuroSky空</p>
+                </a>
+            </div>
+
+            <div class="modal-footer-text">
+                <p>Jumlah Member Saat Ini : <span id="popup-member-count">0</span></p>
+                <p style="color: rgba(255, 255, 255, 0.35); font-size: 11px; margin-top: 4px;">Hanya menampilkan member
+                    yg sudah terverifikasi</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="discordModal" class="modal-overlay" style="z-index: 9999;">
+        <div class="modal-content" style="text-align: center; max-width: 340px;">
+            <h2 class="modal-title" style="color: #5865f2; font-size: 26px; letter-spacing: 1px; margin-bottom: 10px;">
+                OOPS!!</h2>
+
+            <div
+                style="font-size: 70px; color: rgba(88, 101, 242, 0.85); margin: 20px 0; display: inline-block; animation: ri-spin 4s linear infinite;">
+                <i class="ri-tools-line"></i>
+            </div>
+
+            <p class="modal-text"
+                style="font-size: 13.5px; color: rgba(255,255,255,0.75); line-height: 1.5; margin-top: 10px;">
+                Discord Dopamine sedang dalam tahap pembuatan, stay tuned ya!
+            </p>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        const mainCount = document.getElementById('main-member-count');
+        const popupCount = document.getElementById('popup-member-count');
+        if (mainCount && popupCount) {
+            popupCount.innerText = mainCount.innerText;
+        }
+
+        const infoBtn = document.querySelector('.btn-secondary');
+        const infoModal = document.getElementById('infoModal');
+        const openMemberBtn = document.getElementById('openMemberBtn');
+        const memberListModal = document.getElementById('memberListModal');
+        const memberSearch = document.getElementById('memberSearch');
+
+        const openDiscordBtn = document.getElementById('openDiscordBtn');
+        const discordModal = document.getElementById('discordModal');
+        const adminModal = document.getElementById('adminModal');
+
+        const swiper = new Swiper('.admin-swiper', {
+            slidesPerView: 'auto',
+            spaceBetween: 15,
+            loop: true,
+            freeMode: {
+                enabled: true,
+                sticky: false,
+                momentumBounce: false,
+            },
+            grabCursor: true,
+        });
+
+        function openAdminModal(name, role, sub, img, igUrl, igSec, igAlt, ttUrl) {
+            document.getElementById('modalAdminName').innerText = name;
+            document.getElementById('modalAdminRole').innerText = role;
+            document.getElementById('modalAdminSub').innerText = sub;
+            document.getElementById('modalAdminImg').src = img;
+
+            const btnMainIg = document.getElementById('linktreeInstagram');
+            const btnSecIg = document.getElementById('linktreeInstagramSec');
+            const btnAltIg = document.getElementById('linktreeInstagramAlt');
+            const btnTikTok = document.getElementById('linktreeTikTok');
+
+            btnMainIg.href = igUrl;
+            btnTikTok.href = ttUrl;
+
+            if (name === 'Kyzzlyy') {
+                btnMainIg.innerHTML = '<i class="ri-instagram-line"></i> Akun Utama';
+                btnSecIg.href = igSec;
+                btnSecIg.style.display = 'flex';
+                btnAltIg.href = igAlt;
+                btnAltIg.style.display = 'flex';
+            } else {
+                btnMainIg.innerHTML = '<i class="ri-instagram-line"></i> Instagram';
+                btnSecIg.style.display = 'none';
+                btnAltIg.style.display = 'none';
+            }
+
+            adminModal.classList.add('show');
+        }
+
+        // FUNGSI ANIMASI BUKA/TUTUP INFO MODAL
+        infoBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            backToInfoMenu(); // Reset ke menu utama setiap kali dibuka
+            infoModal.classList.add('show');
+        });
+
+        // Fungsionalitas Navigasi antar Menu & Detail Info
+        function showInfoDetail(number) {
+    document.getElementById('infoMainMenuView').style.display = 'none';
+    document.querySelectorAll('.info-detail-box').forEach(box => box.classList.remove('active'));
+    
+    const targetDetail = document.getElementById('infoDetail' + number);
+    const descEl = targetDetail.querySelector('.info-detail-desc');
+    
+    // Cek otomatis: jika isinya cuma tanda '#'
+    if (descEl.innerText.trim() === '#') {
+        descEl.innerHTML = '<span style="color: rgba(255, 255, 255, 0.4); font-style: italic; display: flex; align-items: center; gap: 6px;"><i class="ri-error-warning-line" style="font-size: 16px;"></i> Belum ada informasi tersedia.</span>';
+    }
+    
+    targetDetail.classList.add('active');
+}
+        
+
+        function backToInfoMenu() {
+            document.querySelectorAll('.info-detail-box').forEach(box => box.classList.remove('active'));
+            document.getElementById('infoMainMenuView').style.display = 'block';
+        }
+
+        openMemberBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            memberListModal.classList.add('show');
+        });
+
+        openDiscordBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const modalTitle = discordModal.querySelector('.modal-title');
+            const modalText = discordModal.querySelector('.modal-text');
+            modalTitle.innerText = "OOPS!!";
+            modalTitle.style.color = "#5865f2";
+            modalText.innerText = "Discord Dopamine sedang dalam tahap pembuatan, stay tuned ya!";
+            
+            discordModal.classList.add('show');
+        });
+
+        window.addEventListener('click', function (e) {
+            if (e.target === infoModal) infoModal.classList.remove('show');
+            if (e.target === discordModal) discordModal.classList.remove('show');
+            if (e.target === adminModal) adminModal.classList.remove('show');
+            if (e.target === memberListModal) memberListModal.classList.remove('show');
+        });
+
+        document.querySelectorAll('.modal-content').forEach(function (content) {
+            content.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        });
+
+        memberSearch.addEventListener('input', function () {
+            const filterValue = memberSearch.value.toLowerCase();
+            const memberCards = document.querySelectorAll('.member-card');
+
+            memberCards.forEach(function (card) {
+                const nameText = card.querySelector('.member-name').innerText.toLowerCase();
+                const usernameText = card.querySelector('.member-username').innerText.toLowerCase();
+
+                if (nameText.includes(filterValue) || usernameText.includes(filterValue)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+
+        // Script otomatis untuk merapikan nama dan memasang badge status
+        document.querySelectorAll('#memberListContainer .member-card').forEach(function (card) {
+            const nameEl = card.querySelector('.member-name');
+            const status = card.getAttribute('data-status');
+            
+            if (nameEl && !card.querySelector('.member-card-header')) {
+                const header = document.createElement('div');
+                header.className = 'member-card-header';
+                
+                nameEl.parentNode.insertBefore(header, nameEl);
+                header.appendChild(nameEl);
+                
+                if (status) {
+                    const badge = document.createElement('span');
+                    badge.className = `member-badge badge-${status.toLowerCase()}`;
+                    badge.innerText = status.toUpperCase();
+                    header.appendChild(badge);
+                }
+            }
+        });
+
+        document.querySelectorAll('#memberListContainer .member-card').forEach(function (card) {
+            card.addEventListener('click', function (e) {
+                const link = this.getAttribute('href');
+
+                if (link === '#' || link === '' || link.includes('username_member')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const modalTitle = discordModal.querySelector('.modal-title');
+                    const modalText = discordModal.querySelector('.modal-text');
+
+                    modalTitle.innerText = "OOPS!!";
+                    modalTitle.style.color = "#ef4444";
+                    modalText.innerText = "Member ini belum memverifikasi akunnya, minta orangnya langsung aja yuk!";
+
+                    discordModal.classList.add('show');
+                }
+            });
+        });
+    </script>
+    
+    <footer class="site-footer">
+        <p class="footer-copyright">2026 © Dopamine Family. All rights reserved.</p>
+        <p class="footer-madeby">Made with <i class="ri-heart-fill footer-heart"></i> by <span>𝙆𝙮𝙯𝙚nn` 𝖋𝖙
+                𝙆𝙂𝙉</span></p>
+    </footer>
+
+</body>
+
+</html>
