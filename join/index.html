@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Dopamine</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+    <div class="grid-bg"></div>
+
+
+    <div class="selection-card">
+    <h2 class="card-title">Join ke Dopamine?</h2>
+    <p class="card-subtitle">sebelum join, seleksi terlebih dahulu.</p>
+
+    <div class="action-row">
+        <a href="https://chat.whatsapp.com/H4IkcwRPWfsEDCB0pQfCtk" target="_blank" class="btn-seleksi-utama">Seleksi</a>
+
+        <button id="openRulesBtn" class="btn-star-rules">
+            <i class="ri-sparkling-line"></i>
+        </button>
+    </div>
+
+    <p class="card-subtitle">0 orang sedang seleksi..</p>
+
+
+    
+    <div class="footer-credit">
+        TikTok Account | by <span>𝙆𝙮𝙯𝙚nn` 𝖋𝖙 𝙆𝙂𝙉</span>
+    </div>
+</div>
+
+    <div id="rulesModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="modal-title">Syarat Join Dopamine</h3>
+            <ol class="rules-list">
+                <li>1. Mengisi Formulir dibawah</li>
+                <li>2. Tidak G4y</li>
+                <li>3. Tidak F3mboy</li>
+                <li>4. dah itu aja</li>
+            </ol>
+
+
+            <button class="btn-copy-form" id="copyFormBtn">
+                <i class="ri-file-copy-line"></i> Salin Formulir Seleksi
+            </button>
+        </div>
+    </div>
+
+
+    <div id="toastNotice" class="toast-container">
+        <div class="toast-content">
+            <i class="ri-checkbox-circle-fill toast-icon"></i>
+            <div class="toast-text">
+                <strong>Formulir seleksi berhasil disalin!</strong>
+                <p>Silakan lengkapi data Anda dan kirimkan ke ruang seleksi.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const openRulesBtn = document.getElementById('openRulesBtn');
+        const rulesModal = document.getElementById('rulesModal');
+        const copyFormBtn = document.getElementById('copyFormBtn');
+        const toastNotice = document.getElementById('toastNotice');
+
+
+        const teksSuratSeleksi = `─── 𝙎𝙐𝙍𝘼𝙏 𝙎𝙀𝙇𝙀𝙆𝙎𝙄 ───\n\nNama        : RL/RP \nUsername    : @bebas \nLink TikTok : disarankan mengisi \n\n─────────────────────`;
+
+
+        openRulesBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            rulesModal.classList.add('show');
+        });
+
+
+        window.addEventListener('click', function (e) {
+            if (e.target === rulesModal) {
+                rulesModal.classList.remove('show');
+            }
+        });
+
+
+        copyFormBtn.addEventListener('click', function () {
+            navigator.clipboard.writeText(teksSuratSeleksi).then(() => {
+                // 1. Tutup modal syarat terlebih dahulu
+                rulesModal.classList.remove('show');
+
+                // 2. Munculkan pop-up notifikasi sukses
+                toastNotice.classList.add('show');
+
+                // 3. Hilangkan notifikasi secara otomatis setelah 4 detik
+                setTimeout(() => {
+                    toastNotice.classList.remove('show');
+                }, 4000);
+            }).catch(err => {
+                console.error('Gagal menyalin teks: ', err);
+            });
+        });
+    </script>
+</body>
+
+</html>
